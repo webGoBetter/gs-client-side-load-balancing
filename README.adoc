@@ -188,13 +188,13 @@ say-hello:
     ServerListRefreshInterval: 15000
 ----
 
-这种配置属性在Ribbon _client_。Spring Cloud Netflix创造在我们的应用程序中每个带客户名称` ApplicationContext `。这用于给客户端提供一组用于带状组件实例的bean，包括：This configures properties on a Ribbon _client_. Spring Cloud Netflix creates an `ApplicationContext` for each Ribbon client name in our application. This is used to give the client a set of beans for instances of Ribbon components, including:
+这种配置属性在Ribbon _client_ 中。Spring Cloud Netflix为我们每一个在我们应用中的Ribbon Client创造一个 `ApplicationContext` 。这用于给客户端提供一组用于Ribbon组件实例的bean，包括：
 
-* an `IClientConfig`, which stores client configuration for a client or load balancer,
-* an `ILoadBalancer`, which represents a software load balancer,
-* a `ServerList`, which defines how to get a list of servers to choose from,
-* an `IRule`, which describes a load balancing strategy, and
-* an `IPing`, which says how periodic pings of a server are performed.
+* `IClientConfig`, 用于为客户端或负载均衡器存储客户端配置,
+* `ILoadBalancer`, 表示软件负载均衡器,
+* `ServerList`, 它定义了如何获取服务器列表,
+* `IRule`, 描述负载平衡策略，以及
+* `IPing`, 这说的如何进行定期ping服务器。
 
 In our case above, the client is named `say-hello`. The properties we set are `eureka.enabled` (which we set to `false`), `listOfServers`, and `ServerListRefreshInterval`. Load balancers in Ribbon normally get their server lists from a Netflix Eureka service registry. (See the https://spring.io/guides/gs/service-registration-and-discovery/[Service Registration and Discovery] guide for information on using a Eureka service registry with Spring Cloud.) For our simple purposes here, we're skipping Eureka, so we set the `ribbon.eureka.enabled` property to `false` and instead give Ribbon a static `listOfServers`. `ServerListRefreshInterval` is the interval, in milliseconds, between refreshes of Ribbon's service list.
 
@@ -268,7 +268,7 @@ And your requests to the User service should result in calls to Say Hello being 
 
 Now shut down a Say Hello server instance. Once Ribbon has pinged the down instance and considers it down, you should see requests begin to be balanced across the remaining instances.
 
-== Summary
+== 总结
 
 祝贺你!您刚刚开发了一个Spring应用程序，它为调用另一个应用程序执行客户端负载平衡。
 
