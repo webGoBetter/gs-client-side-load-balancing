@@ -8,26 +8,26 @@ projects: [spring-cloud, spring-cloud-netflix]
 :icons: font
 :source-highlighter: prettify
 :project_id: gs-client-side-load-balancing
-This guide walks you through the process of providing client-side load balancing for a microservice application using Netflix Ribbon.
+本指南会带你走一遍使用 Netflix Ribbon 为微服务应用提供客户端负载均衡的过程。
 
-== What you'll build
+== 你将做出什么
 
-You'll build a microservice application that uses Netflix Ribbon and Spring Cloud Netflix to provide client-side load balancing in calls to another microservice.
+你会构建一个在调用另一个微服务应用的时候使用Netflix Ribbon和Spring Cloud Netflix提供客户端负载均衡的微服务应用。
 
-== What you'll need
+== 你需要什么
 
 :java_version: 1.8
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/how_to_complete_this_guide.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/how_to_complete_this_guide.adoc[]
 
 [[reveal-gradle]]
 [.reveal-gradle]
-== Build with Gradle
+== 使用Gradle构建
 
 [[scratch]]
 [.use-gradle]
-== Build with Gradle
+== 使用Gradle构建
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_system_intro.adoc[]
 
@@ -49,19 +49,19 @@ include::initial/say-hello/build.gradle[]
 include::initial/user/build.gradle[]
 ----
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/spring-boot-gradle-plugin.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/spring-boot-gradle-plugin.adoc[]
 
 [[reveal-maven]]
 [.reveal-maven]
-== Build with Maven
+== 使用Maven构建
 
 [[use-maven]]
 [.use-maven]
-== Build with Maven
+== 使用Maven构建
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_system_intro_maven.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/build_system_intro_maven.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/create_directory_structure_hello.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/create_directory_structure_hello.adoc[]
 
 `say-hello/pom.xml`
 [source,xml]
@@ -75,18 +75,18 @@ include::initial/say-hello/pom.xml[]
 include::initial/user/pom.xml[]
 ----
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/spring-boot-maven-plugin.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/spring-boot-maven-plugin.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/hide-show-sts.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/hide-show-sts.adoc[]
 
 
 
 [[initial]]
-== Write a server service
+== 编写服务器服务
 
-Our &#8220;server&#8221; service is called Say Hello. It will return a random greeting (picked out of a static list of three) from an endpoint accessible at `/greeting`.
+我们的 &#8220;服务器&#8221; 服务就是说你好。它将返回一个随机问候语（从三个静态列表中挑选出来），从可访问的端点 `/greeting` 返回。
 
-In `src/main/java/hello`, create the file `SayHelloApplication.java`. It should look like this:
+在 `src/main/java/hello`, 创建一个文件 `SayHelloApplication.java`. 它应该看起来像这样:
 
 `say-hello/src/main/java/hello/SayHelloApplication.java`
 [source,java]
@@ -94,7 +94,7 @@ In `src/main/java/hello`, create the file `SayHelloApplication.java`. It should 
 include::complete/say-hello/src/main/java/hello/SayHelloApplication.java[]
 ----
 
-The `@RestController` annotation gives the same effect as if we were using `@Controller` and `@ResponseBody` together. It marks `SayHelloApplication` as a controller class (which is what `@Controller` does) and ensures that return values from the class's `@RequestMapping` methods will be automatically converted appropriately from their original types and written directly to the response body (which is what `@ResponseBody` does). We have one `@RequestMapping` method for `/greeting` and then another for the root path `/`. (We'll want that second method when we get to working with Ribbon in just a bit.)
+`@RestController` 注解和一起使用`@Controller` 与 `@ResponseBody` 的效果是一样的. It marks `SayHelloApplication` as a controller class (which is what `@Controller` does) and ensures that return values from the class's `@RequestMapping` methods will be automatically converted appropriately from their original types and written directly to the response body (which is what `@ResponseBody` does). We have one `@RequestMapping` method for `/greeting` and then another for the root path `/`. (We'll want that second method when we get to working with Ribbon in just a bit.)
 
 We're going to run multiple instances of this application locally alongside a client service application, so create the directory `src/main/resources`, create the file `application.yml` within it, and then in that file, set a default value for `server.port`. (We'll instruct the other instances of the application to run on other ports, as well, so that none of the Say Hello instances will conflict with the client when we get that running.) While we're in this file, we'll set the `spring.application.name` for our service too.
 
@@ -270,10 +270,9 @@ Now shut down a Say Hello server instance. Once Ribbon has pinged the down insta
 
 == Summary
 
-Congratulations! You've just developed a Spring application that performs client-side load balancing for calls to another application.
+祝贺你!您刚刚开发了一个Spring应用程序，它为调用另一个应用程序执行客户端负载平衡。
 
 
 
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/footer.adoc[]
 
