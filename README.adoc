@@ -94,9 +94,9 @@ include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/ma
 include::complete/say-hello/src/main/java/hello/SayHelloApplication.java[]
 ----
 
-`@RestController` 注解和一起使用`@Controller` 与 `@ResponseBody` 的效果是一样的. It marks `SayHelloApplication` as a controller class (which is what `@Controller` does) and ensures that return values from the class's `@RequestMapping` methods will be automatically converted appropriately from their original types and written directly to the response body (which is what `@ResponseBody` does). We have one `@RequestMapping` method for `/greeting` and then another for the root path `/`. (We'll want that second method when we get to working with Ribbon in just a bit.)
+`@RestController` 注解和一起使用`@Controller` 与 `@ResponseBody` 的效果是一样的. 它标志着 `SayHelloApplication` 作为一个控制器类（就像 `@Controller` 做的一样）并确保返回值类的 `@RequestMapping` 方法将自动转换为适当的类型，从原来直接写入响应体（就像 `@Controller` 做的一样）。我们有一个 `@RequestMapping` 方法生成 `/greeting` 然后另一个方法生成根路径 `/` 。（当我们稍后开始使用Ribbon的时候，我们会想要第二种方法。）
 
-We're going to run multiple instances of this application locally alongside a client service application, so create the directory `src/main/resources`, create the file `application.yml` within it, and then in that file, set a default value for `server.port`. (We'll instruct the other instances of the application to run on other ports, as well, so that none of the Say Hello instances will conflict with the client when we get that running.) While we're in this file, we'll set the `spring.application.name` for our service too.
+我们要在本地运行该应用程序的多个实例的本地与客户服务应用，所以我们来创建目录 `src/main/resources` ，在里面创建文件 `application.yml` ，然后在那个文件，为 `server.port` 设置一个默认值 。（我们还将指示应用程序的其他实例在其他端口上运行，这样当我们运行时，没有一个说hello实例会与客户端发生冲突）。当我们在修改这个文件中的时候，我们也可以为我们的服务设置 `spring.application.name` 。
 
 `say-hello/src/main/resources/application.yml`
 [source,yaml]
@@ -104,11 +104,11 @@ We're going to run multiple instances of this application locally alongside a cl
 include::complete/say-hello/src/main/resources/application.yml[]
 ----
 
-== Access from a client service
+== 从客户端服务访问
 
-The User application will be what our user sees. It will make a call to the Say Hello application to get a greeting and then send that to our user when the user visits the endpoint at `/hi`.
+我们用户将看到这个用户应用。它会访问说“hello”的应用程序以获得问候，然后当用户访问 `/hi` 端点时，将其发送给我们的用户。
 
-In the User application directory, under `src/main/java/hello`, add the file `UserApplication.java`:
+在用户应用程序目录，在 `src/main/java/hello`，添加文件 `UserApplication.java` ：
 
 `user/src/main/java/hello/UserApplication.java`
 [source,java]
@@ -148,9 +148,9 @@ public class UserApplication {
 }
 ----
 
-To get a greeting from Say Hello, we're using Spring's `RestTemplate` template class. `RestTemplate` makes an HTTP GET request to the Say Hello service's URL as we provide it and gives us the result as a `String`. (For more information on using Spring to consume a RESTful service, see the https://spring.io/guides/gs/consuming-rest/[Consuming a RESTful Web Service] guide.)
+为了从说 "Hello" 的应用中获得问候，我们用的是Spring的 `RestTemplate` 模板类。 `RestTemplate` 使HTTP GET来请求我们提供的说 "Hello" 服务的URL，并返回一个 `String` 作为结果。（欲了解更多关于使用Spring使用REST式服务的信息，请参见下面的 https://spring.io/guides/gs/consuming-rest/[Consuming a RESTful Web Service] 指南）。
 
-Add the `spring.application.name` and `server.port` properties to `src/main/resources/application.properties` or `src/main/resources/application.yml`:
+添加 `spring.application.name` 和 `server.port` 属性到 `src/main/resources/application.properties` 或者 `src/main/resources/application.yml`:
 
 `user/src/main/resources/application.yml`
 [source,yaml]
@@ -163,9 +163,9 @@ server:
   port: 8888
 ----
 
-== Load balance across server instances
+== 跨服务器实例的负载平衡
 
-Now we can access `/hi` on the User service and see a friendly greeting:
+现在我们可以在用户服务上访问 `/hi` ，看到一个友好的问候语：
 
 ----
 $ curl http://localhost:8888/hi
@@ -175,7 +175,7 @@ $ curl http://localhost:8888/hi?name=Orontes
 Salutations, Orontes!
 ----
 
-To move beyond a single hard-coded server URL to a load-balanced solution, let's set up Ribbon. In the `application.yml` file under `user/src/main/resources/`, add the following properties:
+为了跨越一个硬编码的服务器URL到一个负载均衡的解决方案，让我们设置Ribbon。在 `application.yml` 文件下 `user/src/main/resources/` ，添加以下属性:
 
 `user/src/main/resources/application.yml`
 [source,yaml]
@@ -188,7 +188,7 @@ say-hello:
     ServerListRefreshInterval: 15000
 ----
 
-This configures properties on a Ribbon _client_. Spring Cloud Netflix creates an `ApplicationContext` for each Ribbon client name in our application. This is used to give the client a set of beans for instances of Ribbon components, including:
+这种配置属性在Ribbon _client_。Spring Cloud Netflix创造在我们的应用程序中每个带客户名称` ApplicationContext `。这用于给客户端提供一组用于带状组件实例的bean，包括：This configures properties on a Ribbon _client_. Spring Cloud Netflix creates an `ApplicationContext` for each Ribbon client name in our application. This is used to give the client a set of beans for instances of Ribbon components, including:
 
 * an `IClientConfig`, which stores client configuration for a client or load balancer,
 * an `ILoadBalancer`, which represents a software load balancer,
@@ -227,7 +227,7 @@ The `@SpringBootApplication` annotation on the `UserApplication` class is equiva
 This approach does mean that our Ribbon configuration will be part of the main application context and therefore shared by _all_ Ribbon clients in the User application. In a normal application, you can avoid this by keeping Ribbon beans out of the main application context (e.g., in this example, you could put `SayHelloConfiguration` in a different package from `UserApplication`).
 ====
 
-== Trying it out
+== 试一下
 
 Run the Say Hello service, using either Gradle:
 
