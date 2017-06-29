@@ -224,50 +224,49 @@ include::complete/user/src/main/java/hello/SayHelloConfiguration.java[]
 ====
 `@SpringBootApplication` 注解在 `UserApplication` 类相当于（其中包括） `@Configuration` 注解将类标记作为一个源的bean定义。这就是为什么我们不需要注释的 `SayHelloConfiguration` 类 `@Configuration` ：因为它在同一个包中有一个 `UserApplication` 类，它已经被扫描成为生产bean的方法。
 
-This approach does mean that our Ribbon configuration will be part of the main application context and therefore shared by _all_ Ribbon clients in the User application. In a normal application, you can avoid this by keeping Ribbon beans out of the main application context (e.g., in this example, you could put `SayHelloConfiguration` in a different package from `UserApplication`).
+这种方法意味着我们Ribbon的配置将主要应用上下文的一部分，因此我们应用中的 _所有_ Ribbon 客户端都会共享。在一个正常的应用程序，你可以通过让Ribbon bean从主应用程序上下文脱离避免这种情况（例如，在这个例子中，你可以把 `SayHelloConfiguration` 放在和 `UserApplication` 不同的包中）。
 ====
 
 == 试一下
 
-Run the Say Hello service, using either Gradle:
+运行 Say Hello 服务，使用的是Gradle
 
 ----
 $ ./gradlew bootRun
 ----
 
-or Maven:
+或者 Maven:
 
 ----
 $ mvn spring-boot:run
 ----
 
-Run other instances on ports 9092 and 9999, again using either Gradle:
+运行在端口9092和9999的其他实例，再利用Gradle：
 
 ----
 $ SERVER_PORT=9092 ./gradlew bootRun
 ----
 
-or Maven:
+或者 Maven:
 
 ----
 $ SERVER_PORT=9999 mvn spring-boot:run
 ----
 
-Then start up the User service. Access `localhost:8888/hi` and then watch the Say Hello service instances. You can see Ribbon's pings arriving every 15 seconds:
+然后启动用户服务。访问 `localhost:8888/hi` 然后看 Say Hello 服务实例。你可以看到Ribbon的每间隔15秒扫描：
 
 ----
 2016-03-09 21:13:22.115  INFO 90046 --- [nio-8090-exec-1] hello.SayHelloApplication                : Access /
 2016-03-09 21:13:22.629  INFO 90046 --- [nio-8090-exec-3] hello.SayHelloApplication                : Access /
 ----
 
-And your requests to the User service should result in calls to Say Hello being spread across the running instances in round-robin form:
+您对用户服务的请求将导致调用以循环形式在正在运行的实例之间传播：
 
 ----
 2016-03-09 21:15:28.915  INFO 90046 --- [nio-8090-exec-7] hello.SayHelloApplication                : Access /greeting
 ----
 
-Now shut down a Say Hello server instance. Once Ribbon has pinged the down instance and considers it down, you should see requests begin to be balanced across the remaining instances.
-
+现在关闭一个Say Hello的服务器实例。一旦Ribbon已经ping不通一个实例，认为他已经宕机了，你应该看到请求开始在其他实例上保持平衡。
 == 总结
 
 祝贺你!您刚刚开发了一个Spring应用程序，它为调用另一个应用程序执行客户端负载平衡。
