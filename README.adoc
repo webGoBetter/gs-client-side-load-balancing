@@ -218,11 +218,11 @@ include::complete/user/src/main/java/hello/SayHelloConfiguration.java[]
 
 我们可以通过创建具有相同名称的bean来覆盖Spring Cloud Netflix给我们的任何与Ribbon相关的bean。在这里，我们重写 `IPing` 和默认负载平衡器使用 `IRule`。默认 `IPing` 是 `NoOpPing` （这实际上不ping服务器实例，而不是总是报道他们稳定），和默认的`IRule`是 `ZoneAvoidanceRule` （避免了亚马逊的EC2区最有可能出故障的服务器，因此可能会有点难在我们本地环境尝试）。
 
-Our `IPing` is a `PingUrl`, which will ping a URL to check the status of each server. Say Hello has, as you'll recall, a method mapped to the `/` path; that means that Ribbon will get an HTTP 200 response when it pings a running Say Hello server. The `IRule` we set up, the `AvailabilityFilteringRule`, will use Ribbon's built-in circuit breaker functionality to filter out any servers in an &#8220;open-circuit&#8221; state: if a ping fails to connect to a given server, or if it gets a read failure for the server, Ribbon will consider that server &#8220;dead&#8221; until it begins to respond normally.
+我们的 `IPing` 是 `PingUrl` ，将ping URL来检查每个服务器的状态。你可能还记得Say Hello会映射到 `/` 路径的方法；这意味着Ribbon ping 一个正在运行着 Say Hello 的服务器时将得到一个HTTP 200响应。我们`建立的 `IRule` ,也就是  `AvailabilityFilteringRule` ，将使用Ribbon内置断路器功能，过滤掉任何处于 &#8220;open-circuit&#8221; 状态的服务器：如果一个ping未能连接到指定的服务器，或者如果它被读取故障服务器，Ribbon将考虑到让服务器 &#8220;dead&#8221; ,直到它开始正常的反应。
 
 [NOTE]
 ====
-The `@SpringBootApplication` annotation on the `UserApplication` class is equivalent to (among others) the `@Configuration` annotation that marks a class as a source of bean definitions. This is why we don't need to annotate the `SayHelloConfiguration` class with `@Configuration`: since it's in the same package as `UserApplication`, it is already being scanned for bean methods.
+`@SpringBootApplication` 注解在 `UserApplication` 类相当于（其中包括） `@Configuration` 注解将类标记作为一个源的bean定义。这就是为什么我们不需要注释的 `SayHelloConfiguration` 类 `@Configuration` ：因为它在同一个包中有一个 `UserApplication` 类，它已经被扫描成为生产bean的方法。
 
 This approach does mean that our Ribbon configuration will be part of the main application context and therefore shared by _all_ Ribbon clients in the User application. In a normal application, you can avoid this by keeping Ribbon beans out of the main application context (e.g., in this example, you could put `SayHelloConfiguration` in a different package from `UserApplication`).
 ====
