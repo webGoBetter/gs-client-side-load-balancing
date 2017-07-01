@@ -29,11 +29,11 @@ include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/ma
 [.use-gradle]
 == 使用Gradle构建
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_system_intro.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/build_system_intro.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/create_directory_structure_hello.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/create_directory_structure_hello.adoc[]
 
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/create_both_builds.adoc[]
+include::https://raw.githubusercontent.com/webGoBetter/getting-started-macros/master/create_both_builds.adoc[]
 
 `say-hello/build.gradle`
 // AsciiDoc source formatting doesn't support groovy, so using java instead
