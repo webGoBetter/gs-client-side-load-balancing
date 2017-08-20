@@ -196,7 +196,7 @@ say-hello:
 * `IRule`, 描述负载平衡策略，以及
 * `IPing`, 这说的如何进行定期ping服务器。
 
-在我们上面的例子中，客户端被命名为 `say-hello`。我们设置的属性 `eureka.enabled` （这个属性我们设置为 `false` ）， `listOfServers`，和 `ServerListRefreshInterval` 。Ribbon中的负载平衡器通常从从Netflix Eureka服务注册中获取他们的服务器列表。（看 http://knos.top/guides/gs/service-registration-and-discovery/[服务注册与发现] 指南信息使用Spring Cloud 注册Eureka服务。）这里为了我们简单的目的，我们跳过 Eureka ，所以我们设置 `ribbon.eureka.enabled` 属性为 `false` 而不是给Ribbon 一些静态的` listofservers `。 `ServerListRefreshInterval` 是刷新Ribbon服务列表的间隔时间，以毫秒为单位。
+在我们上面的例子中，客户端被命名为 `say-hello`。我们设置的属性 `eureka.enabled` （这个属性我们设置为 `false` ）， `listOfServers`，和 `ServerListRefreshInterval` 。Ribbon中的负载平衡器通常从从Netflix Eureka服务注册中获取他们的服务器列表。（看 http://knos.top/guides/gs/service-registration-and-discovery/[服务注册与发现] 指南信息使用Spring Cloud 注册Eureka服务。）这里为了我们简单的目的，我们跳过 Eureka ，所以我们设置 `ribbon.eureka.enabled` 属性为 `false` 而不是给Ribbon 一些静态的 `listofservers` 。 `ServerListRefreshInterval` 是刷新Ribbon服务列表的间隔时间，以毫秒为单位。
 
 在我们的 `UserApplication` 类中, 切换 `RestTemplate` 使用Ribbon客户端到服务器地址问好：
 
